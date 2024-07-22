@@ -8,6 +8,12 @@ size = 10.0
 [scrolling]
 history=20000
 
+[window]
+dimensions = { columns = 105, lines = 35 }
+padding = { x = 3, y = 3 }
+dynamic_padding = true
+opacity = 0.9
+
 # KDE Breeze (Ported from Konsole)
 
 # Default colors
