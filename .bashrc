@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 iatest=$(expr index "$-" i)
 
-# remember to install multitail tree zoxide trash-cli fzf bash-completion fastfetch ble.sh starship atuin
-
+# remember to install trash-cli,zoxide,atuin,ble.sh,fastfetch,fzf,bat,bash-completion,multitail,tree
 #######################################################
 # SOURCED ALIAS'S AND SCRIPTS BY zachbrowne.me
 #######################################################
@@ -64,14 +63,10 @@ if [[ $iatest -gt 0 ]]; then bind "set completion-ignore-case on"; fi
 if [[ $iatest -gt 0 ]]; then bind "set show-all-if-ambiguous On"; fi
 
 # Set the default editor
-export EDITOR=nvim
-export VISUAL=nvim
-alias pico='edit'
-alias spico='sedit'
-alias nano='edit'
-alias snano='sedit'
-alias vim='nvim'
-alias linutil='curl -fsSL https://christitus.com/linux | sh'
+export EDITOR=vim
+export VISUAL=vim
+alias spico='sudo pico'
+alias snano='sudo nano'
 
 # To have colors for ls and all grep commands such as grep, egrep and zgrep
 export CLICOLOR=1
@@ -96,21 +91,6 @@ export LESS_TERMCAP_se=$'\E[0m'
 export LESS_TERMCAP_so=$'\E[01;44;33m'
 export LESS_TERMCAP_ue=$'\E[0m'
 export LESS_TERMCAP_us=$'\E[01;32m'
-
-#######################################################
-# MACHINE SPECIFIC ALIAS'S
-#######################################################
-
-# Alias's for SSH
-# alias SERVERNAME='ssh YOURWEBSITE.com -l USERNAME -p PORTNUMBERHERE'
-
-# Alias's to change the directory
-alias web='cd /var/www/html'
-
-# Alias's to mount ISO files
-# mount -o loop /home/NAMEOFISO.iso /home/ISOMOUNTDIR/
-# umount /home/NAMEOFISO.iso
-# (Both commands done as root only.)
 
 #######################################################
 # GENERAL ALIAS'S
@@ -143,10 +123,10 @@ alias cls='clear'
 alias apt-get='sudo apt-get'
 alias multitail='multitail --no-repeat -c'
 alias freshclam='sudo freshclam'
-alias vi='nvim'
-alias svi='sudo vi'
-alias vis='nvim "+set si"'
 alias pas='pacman -Ss'
+alias yas='yay -Ss'
+alias linutil='curl -fsSL https://christitus.com/linux | sh'
+
 
 # Change directory aliases
 alias home='cd ~'
@@ -230,15 +210,6 @@ alias ungz='tar -xvzf'
 
 # Show all logs in /var/log
 alias logs="sudo find /var/log -type f -exec file {} \; | grep 'text' | cut -d' ' -f1 | sed -e's/:$//g' | grep -v '[0-9]$' | xargs tail -f"
-
-# SHA1
-alias sha1='openssl sha1'
-
-alias clickpaste='sleep 3; xdotool type "$(xclip -o -selection clipboard)"'
-
-# KITTY - alias to be able to use kitty features when connecting to remote servers(e.g use tmux on remote server)
-
-alias kssh="kitty +kitten ssh"
 
 # alias to cleanup unused docker containers, images, networks, and volumes
 
@@ -425,7 +396,7 @@ if [ "$DISTRIBUTION" = "redhat" ] || [ "$DISTRIBUTION" = "arch" ]; then
       alias cat='bat'
 else
       alias cat='batcat'
-fi 
+fi
 
 # Show the current version of the operating system
 ver() {
@@ -501,25 +472,6 @@ lazyg() {
 	git add .
 	git commit -m "$1"
 	git push
-}
-
-function hb {
-    if [ $# -eq 0 ]; then
-        echo "No file path specified."
-        return
-    elif [ ! -f "$1" ]; then
-        echo "File path does not exist."
-        return
-    fi
-
-    uri="http://bin.christitus.com/documents"
-    response=$(curl -s -X POST -d @"$1" "$uri")
-    if [ $? -eq 0 ]; then
-        hasteKey=$(echo $response | jq -r '.key')
-        echo "http://bin.christitus.com/$hasteKey"
-    else
-        echo "Failed to upload the document."
-    fi
 }
 
 #######################################################
