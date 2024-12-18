@@ -1,17 +1,18 @@
 #!/bin/bash
 
-# Adjustable speed in milliseconds (default 100 ms)
-CLICK_DELAY=100
+# Adjustable speed in milliseconds (default: 100 ms)
+CLICK_DELAY=1
 
 # File to store the script's PID
 PID_FILE="/tmp/autoclicker.pid"
 
 # Function to start the auto-clicker
 start_clicker() {
-    echo "Auto-clicker enabled. Press the shortcut again to stop."
+    echo "Auto-clicker enabled with a delay of ${CLICK_DELAY}ms. Press the shortcut again to stop."
     while :; do
         xdotool click 1
-        sleep $(bc <<< "scale=3; $CLICK_DELAY/1000")
+        # Use sleep with proper conversion to seconds
+        sleep "$(awk "BEGIN { printf \"%.3f\", $CLICK_DELAY/1000 }")"
     done
 }
 
