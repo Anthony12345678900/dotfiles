@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 iatest=$(expr index "$-" i)
-
-# remember to install trash-cli,zoxide,atuin,ble.sh,fastfetch,fzf,bat,bash-completion,multitail,tree
 #######################################################
 # SOURCED ALIAS'S AND SCRIPTS BY zachbrowne.me
 #######################################################
@@ -63,10 +61,11 @@ if [[ $iatest -gt 0 ]]; then bind "set completion-ignore-case on"; fi
 if [[ $iatest -gt 0 ]]; then bind "set show-all-if-ambiguous On"; fi
 
 # Set the default editor
-export EDITOR=vim
-export VISUAL=vim
+export EDITOR=nano
+export VISUAL=nano
 alias spico='sudo pico'
 alias snano='sudo nano'
+alias vim='nvim'
 
 # To have colors for ls and all grep commands such as grep, egrep and zgrep
 export CLICOLOR=1
@@ -123,10 +122,14 @@ alias cls='clear'
 alias apt-get='sudo apt-get'
 alias multitail='multitail --no-repeat -c'
 alias freshclam='sudo freshclam'
+alias vi='nvim'
+alias svi='sudo vi'
+alias vis='nvim "+set si"'
+alias yayf="yay -Slq | fzf --multi --preview 'yay -Sii {1}' --preview-window=down:75% | xargs -ro yay -S"
+alias startplasma="/usr/lib/plasma-dbus-run-session-if-needed /usr/bin/startplasma-wayland"
 alias pas='pacman -Ss'
 alias yas='yay -Ss'
 alias linutil='curl -fsSL https://christitus.com/linux | sh'
-
 
 # Change directory aliases
 alias home='cd ~'
@@ -438,6 +441,41 @@ ver() {
     esac
 }
 
+# Automatically install the needed support files for this .bashrc file
+install_bashrc_support() {
+	local dtype
+	dtype=$(distribution)
+
+	case $dtype in
+		"redhat")
+			sudo yum install multitail tree zoxide trash-cli fzf bash-completion fastfetch
+			;;
+		"suse")
+			sudo zypper install multitail tree zoxide trash-cli fzf bash-completion fastfetch
+			;;
+		"debian")
+			sudo apt-get install multitail tree zoxide trash-cli fzf bash-completion
+			# Fetch the latest fastfetch release URL for linux-amd64 deb file
+			FASTFETCH_URL=$(curl -s https://api.github.com/repos/fastfetch-cli/fastfetch/releases/latest | grep "browser_download_url.*linux-amd64.deb" | cut -d '"' -f 4)
+
+			# Download the latest fastfetch deb file
+			curl -sL $FASTFETCH_URL -o /tmp/fastfetch_latest_amd64.deb
+
+			# Install the downloaded deb file using apt-get
+			sudo apt-get install /tmp/fastfetch_latest_amd64.deb
+			;;
+		"arch")
+			sudo pacman -S tree trash-cli fzf bash-completion fastfetch zoxide ttf-meslo-nerd
+			;;
+		"slackware")
+			echo "No install support for Slackware"
+			;;
+		*)
+			echo "Unknown distribution"
+			;;
+	esac
+}
+
 # IP address lookup
 alias whatismyip="whatsmyip"
 function whatsmyip () {
@@ -452,7 +490,7 @@ function whatsmyip () {
 
     # External IP Lookup
     echo -n "External IP: "
-    curl -s ifconfig.me
+    curl -4 ifconfig.me
 }
 
 # Trim leading and trailing spaces (for scripts)
@@ -474,12 +512,6 @@ lazyg() {
 	git push
 }
 
-#######################################################
-# Set the ultimate amazing command prompt
-#######################################################
-
-alias hug="hugo server -F --bind=10.0.0.97 --baseURL=http://10.0.0.97"
-
 # Check if the shell is interactive
 if [[ $- == *i* ]]; then
     # Bind Ctrl+f to insert 'zi' followed by a newline
@@ -490,5 +522,9 @@ export PATH=$PATH:"$HOME/.local/bin:$HOME/.cargo/bin:/var/lib/flatpak/exports/bi
 
 eval "$(starship init bash)"
 eval "$(zoxide init bash)"
-source ~/.local/share/blesh/ble.sh
-eval "$(atuin init bash)"
+source -- ~/.local/share/blesh/ble.sh
+#if [[ -z $DISPLAY ]] && [[ $(tty) = /dev/tty1 ]]; then
+#
+#exec /usr/lib/plasma-dbus-run-session-if-needed /usr/bin/startplasma-wayland
+#
+#fi
