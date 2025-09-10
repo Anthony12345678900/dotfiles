@@ -1,0 +1,63 @@
+# ===========================
+# Dungeon Crawl: Stone Soup RC
+# Good general-purpose setup
+# ===========================
+
+# --- UI / DISPLAY SETTINGS ---
+tile_full_screen = true
+show_more = false
+travel_delay = 0
+rest_delay = 0
+cloud_status = true
+
+# --- TILE SIZE / SCALE ---
+tile_scale = 3.0
+tile_filter_scaling = true
+tile_cell_pixels = 64
+tile_font_crt_size = 32
+tile_font_stat_size = 28
+tile_font_msg_size = 28
+tile_font_tip_size = 26
+tile_font_label_size = 32
+tile_sidebar_pixels = 64
+tile_map_scale = 1.6
+
+# --- AUTO PICKUP ---
+autopickup = $?!+"/
+# Auto-pickup all gold ($), scrolls (?), potions (!), wands (/), books (+), jewellery (")
+
+autopickup_exceptions += <throwing net
+autopickup_exceptions += <club
+autopickup_exceptions += >curare-tipped darts
+# Ignore trash weapons but keep special ammo
+
+# --- AUTOMATION ---
+auto_butcher = true
+autofight_stop_hp_percent = 50
+easy_confirm = all
+confirm_butcher = never
+default_manual_training = true
+skill_focus = true
+
+# --- MESSAGES / COLORS ---
+message_colour += lightred:You die
+message_colour += lightred:lethal
+message_colour += lightgreen:You feel.*stronger
+message_colour += yellow:warn
+
+# --- KEYBINDS ---
+bindkey = [Tab] CMD_AUTOFIGHT
+
+# --- TARGETING ---
+tile_target_mode = reset
+
+# --- EXPERIENCE / WARNINGS ---
+show_gold_turns = true
+hp_warning = 30
+mp_warning = 20
+show_zot = always
+
+# --- AUTO EXPLORE ---
+explore_stop = items,greedy_pickup,stairs,shops,altars,branches
+explore_greedy = true
+explore_delay = 0
