@@ -2,62 +2,64 @@
 # Dungeon Crawl: Stone Soup RC
 # Good general-purpose setup
 # ===========================
+#hello crawler :]
 
 # --- UI / DISPLAY SETTINGS ---
 tile_full_screen = true
-show_more = false
 travel_delay = 0
 rest_delay = 0
 cloud_status = true
+remember_name = true
 
 # --- TILE SIZE / SCALE ---
-tile_scale = 3.0
-tile_filter_scaling = true
-tile_cell_pixels = 64
-tile_font_crt_size = 32
-tile_font_stat_size = 28
-tile_font_msg_size = 28
-tile_font_tip_size = 26
-tile_font_label_size = 32
-tile_sidebar_pixels = 64
-tile_map_scale = 1.6
+game_scale = 3
+#tile_filter_scaling = true
+#tile_viewport_scale = 1.0
+#tile_font_crt_size = 32
+#tile_font_stat_size = 28
+#tile_font_msg_size = 28
+#tile_font_tip_size = 26
+#tile_font_lbl_size = 32
+#tile_sidebar_pixels = 64
+#tile_map_scale = 0.6
 
 # --- AUTO PICKUP ---
-autopickup = $?!+"/
+autopickup = $?!+"/♦
 # Auto-pickup all gold ($), scrolls (?), potions (!), wands (/), books (+), jewellery (")
 
 autopickup_exceptions += <throwing net
-autopickup_exceptions += <club
-autopickup_exceptions += >curare-tipped darts
+autopickup_exceptions += <curare-tipped dart
+autopickup_exceptions += >club
 # Ignore trash weapons but keep special ammo
 
 # --- AUTOMATION ---
-auto_butcher = true
-autofight_stop_hp_percent = 50
+autofight_stop = 50
 easy_confirm = all
-confirm_butcher = never
 default_manual_training = true
 skill_focus = true
 
 # --- MESSAGES / COLORS ---
-message_colour += lightred:You die
-message_colour += lightred:lethal
-message_colour += lightgreen:You feel.*stronger
-message_colour += yellow:warn
+#message_colour += lightred:You die
+#message_colour += lightred:lethal
+#message_colour += lightgreen:You feel.*stronger
+#message_colour += yellow:warn
 
 # --- KEYBINDS ---
 bindkey = [Tab] CMD_AUTOFIGHT
 
-# --- TARGETING ---
-tile_target_mode = reset
-
 # --- EXPERIENCE / WARNINGS ---
-show_gold_turns = true
 hp_warning = 30
 mp_warning = 20
-show_zot = always
+always_show_zot = true
+#always_show_gems = false
+#more_gem_info = false
+#always_show_doom_contam = false
+tile_show_threat_levels = tough, nasty, unusual
 
 # --- AUTO EXPLORE ---
-explore_stop = items,greedy_pickup,stairs,shops,altars,branches
+explore_stop  = items,stairs,shops,altars,portals,branches,runed_doors
+explore_stop += greedy_pickup_smart,greedy_visited_item_stack
 explore_greedy = true
 explore_delay = 0
+show_travel_trail = true
+explore_auto_rest = true
